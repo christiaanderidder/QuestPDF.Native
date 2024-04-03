@@ -74,15 +74,13 @@ cmake \
     --build ${PWD}/native/build \
     --config Release
 
-RUNTIME=linux-amd64
-
-mkdir -p output/runtimes/$RUNTIME/native
-find native/build -type f \( -name "*.dylib" -o -name "*.dll" -o -name "*.so" \) -exec cp {} output/runtimes/$RUNTIME/native \;
+mkdir -p output/runtimes/$QUESTPDF_RUNTIME/native
+find native/build -type f \( -name "*.dylib" -o -name "*.dll" -o -name "*.so" \) -exec cp {} output/runtimes/$QUESTPDF_RUNTIME/native \;
 
 echo $'\n********** Building QuestPDF managed **********\n'
 
 dotnet build managed --configuration Debug --framework net8.0
 cp -R output/* managed/NativeSkia.Tests/bin/Debug/net8.0
 dotnet test managed --framework net8.0
-mkdir -p testOutput/$RUNTIME
-cp -r managed/NativeSkia.Tests/bin/Debug/net8.0/Output/* testOutput/$RUNTIME
+mkdir -p testOutput/$QUESTPDF_RUNTIME
+cp -r managed/NativeSkia.Tests/bin/Debug/net8.0/Output/* testOutput/$QUESTPDF_RUNTIME

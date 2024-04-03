@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:8.0-alpine
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine
 
 # Install required build tools from apk
 RUN apk add --no-cache \
@@ -26,6 +26,7 @@ RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git .
     && cd skia && python3 tools/git-sync-deps && cd ..
 
 ENV PATH="${PATH}:/work/depot_tools"
+ENV QUESTPDF_RUNTIME=linux-amd64
 
 # Copy QuestPDF.Native files
 COPY . .
