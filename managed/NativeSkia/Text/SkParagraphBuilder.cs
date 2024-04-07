@@ -84,16 +84,18 @@ internal sealed class SkParagraphBuilder : IDisposable
 {
     public IntPtr Instance { get; private set; }
     
-    public SkParagraphBuilder(IntPtr instance)
-    {
-        Instance = instance;
-        SkiaAPI.EnsureNotNull(Instance);
-    }
-    
+    public ParagraphStyleConfiguration Configuration { get; private set; }
+
     public static SkParagraphBuilder Create(ParagraphStyleConfiguration paragraphStyleConfiguration, SkFontCollection fontCollection)
     {
         var instance = API.paragraph_builder_create(paragraphStyleConfiguration, fontCollection.Instance);
-        return new SkParagraphBuilder(instance);
+        SkiaAPI.EnsureNotNull(instance);
+        
+        return new SkParagraphBuilder
+        {
+            Instance = instance,
+            Configuration = paragraphStyleConfiguration
+        };
     }
     
     public void AddText(string text, SkTextStyle textStyle)
@@ -110,6 +112,11 @@ internal sealed class SkParagraphBuilder : IDisposable
     {
         var instance = API.paragraph_builder_create_paragraph(Instance);
         return new SkParagraph(instance);
+    }
+    
+    public void Reset()
+    {
+        API.paragraph_builder_reset(Instance);
     }
     
     ~SkParagraphBuilder()
@@ -139,6 +146,9 @@ internal sealed class SkParagraphBuilder : IDisposable
         
         [DllImport(SkiaAPI.LibraryName)]
         public static extern IntPtr paragraph_builder_create_paragraph(IntPtr paragraphBuilder);
+        
+        [DllImport(SkiaAPI.LibraryName)]
+        public static extern void paragraph_builder_reset(IntPtr paragraphBuilder);
         
         [DllImport(SkiaAPI.LibraryName)]
         public static extern void paragraph_builder_delete(IntPtr paragraphBuilder);
