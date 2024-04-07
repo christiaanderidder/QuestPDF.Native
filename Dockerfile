@@ -13,7 +13,9 @@ RUN apk add --no-cache \
     icu-libs \
     linux-headers \
     bsd-compat-headers \
-    gn
+    gn \
+    fontconfig \
+    fonts-noto
 
 WORKDIR /work
 
@@ -28,7 +30,7 @@ RUN git clone https://github.com/google/skia.git --branch chrome/m124 --single-b
     && python3 tools/git-sync-deps \
     && cd ..
 
-ENV QUESTPDF_RUNTIME=linux-arm64
+ENV QUESTPDF_RUNTIME=linux-x64
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 ENV PATH="${PATH}:/root/.dotnet"
 
