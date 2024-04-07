@@ -1,32 +1,35 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine
+FROM alpine:latest
 
 # Install required build tools from apk
+# gn installs ninja as dependency
 RUN apk add --no-cache \
     bash \
-    curl \
     wget \
-    python3 \
     git \
+    python3 \
     build-base \
-    ninja \
-    fontconfig-dev \
-    libintl \
-    clang \
     cmake \
-    gn \
-    linux-headers
-
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT 1
+    icu-libs \
+    linux-headers \
+    bsd-compat-headers \
+    gn
 
 WORKDIR /work
 
-# Clone skia and additional required build tools
-RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git ./depot_tools \
-    && git clone https://github.com/google/skia.git --branch chrome/m124 --single-branch ./skia \
-    && cd skia && python3 tools/git-sync-deps && cd ..
+# Install .NET SDK
+RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
+    && chmod +x ./dotnet-install.sh \
+    && ./dotnet-install.sh --channel 8.0
 
-ENV PATH="${PATH}:/work/depot_tools"
-ENV QUESTPDF_RUNTIME=linux-amd64
+# Clone skia and additional required build tools
+RUN git clone https://github.com/google/skia.git --branch chrome/m124 --single-branch ./skia \
+    && cd skia \
+    && python3 tools/git-sync-deps \
+    && cd ..
+
+ENV QUESTPDF_RUNTIME=linux-arm64
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+ENV PATH="${PATH}:/root/.dotnet"
 
 # Copy QuestPDF.Native files
 COPY . .
