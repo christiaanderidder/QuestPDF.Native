@@ -51,6 +51,10 @@ COMMON_ARGS='
     cxx="clang++"
 '
 
+echo $'\n********** Skia build args **********\n'
+
+echo $COMMON_ARGS
+
 echo $'\n********** Running gn **********\n'
 
 which gn
