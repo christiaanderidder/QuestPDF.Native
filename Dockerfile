@@ -15,7 +15,7 @@ RUN apk add --no-cache \
     bsd-compat-headers \
     gn \
     fontconfig \
-    fonts-noto
+    font-noto
 
 WORKDIR /work
 
