@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     python3 \
     build-base \
     cmake \
+    clang \
     icu-libs \
     linux-headers \
     bsd-compat-headers \

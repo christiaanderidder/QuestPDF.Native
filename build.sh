@@ -46,6 +46,9 @@ COMMON_ARGS='
     skia_enable_pdf=true
     skia_compile_modules=true
     extra_cflags=["-fPIC", "-fno-rtti"]
+    skia_use_freetype=true
+    c="clang"
+    cxx="clang++"
 '
 
 echo $'\n********** Running gn **********\n'
