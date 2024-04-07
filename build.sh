@@ -50,12 +50,14 @@ COMMON_ARGS='
 
 echo $'\n********** Running gn **********\n'
 
+which gn
+gn --version
 gn gen out/release --args="$COMMON_ARGS"
 
 echo $'\n********** Running ninja **********\n'
 
-# Fix -nopie argument, change to correct -no-pie
-sed -i -e 's/-nopie/-no-pie/g' ./gn/skia/BUILD.gn
+which ninja
+ninja --version
 ninja -C out/release skia svg skparagraph
 
 popd
@@ -73,6 +75,9 @@ cmake \
 cmake \
     --build ${PWD}/native/build \
     --config Release
+
+echo $'\n********** Copying native binary **********\n'
+echo "output/runtimes/$QUESTPDF_RUNTIME/native"
 
 mkdir -p output/runtimes/$QUESTPDF_RUNTIME/native
 find native/build -type f \( -name "*.dylib" -o -name "*.dll" -o -name "*.so" \) -exec cp {} output/runtimes/$QUESTPDF_RUNTIME/native \;
