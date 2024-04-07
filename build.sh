@@ -47,7 +47,7 @@ COMMON_ARGS='
     skia_compile_modules=true
     extra_cflags=["-fPIC", "-fno-rtti"]
     skia_use_freetype=true
-    c="clang"
+    cc="clang"
     cxx="clang++"
 '
 
