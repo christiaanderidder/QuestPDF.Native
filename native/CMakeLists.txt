@@ -12,7 +12,10 @@ include(CheckIPOSupported)
 check_ipo_supported(RESULT IPO_IS_SUPPORTED)
 
 if(IPO_IS_SUPPORTED)
+    message("IPO supported")
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+else()
+    message("IPO not supported")
 endif()
 
 
