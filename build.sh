@@ -47,8 +47,8 @@ COMMON_ARGS='
     skia_compile_modules=true
     extra_cflags=["-fPIC", "-fno-rtti"]
     skia_use_freetype=true
-    cc="cc"
-    cxx="c++"
+    cc="clang"
+    cxx="clang++"
 '
 
 echo $'\n********** Skia build args **********\n'
@@ -57,8 +57,6 @@ echo $COMMON_ARGS
 
 echo $'\n********** Running gn **********\n'
 
-# Fix -nopie argument, change to correct -no-pie
-sed -i -e 's/-nopie/-no-pie/g' ./gn/skia/BUILD.gn
 
 which gn
 gn --version
@@ -78,8 +76,8 @@ cmake \
     -S ${PWD}/native \
     -B ${PWD}/native/build \
     -DSKIA_DIR=${PWD}/skia \
-    -DCMAKE_CXX_COMPILER=c++ \
-    -DCMAKE_C_COMPILER=cc \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_COMPILER=clang \
     -DCMAKE_BUILD_TYPE=Release
 
 cmake \
