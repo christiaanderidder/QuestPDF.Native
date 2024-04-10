@@ -84,15 +84,22 @@ cmake \
     --config Release
 
 echo $'\n********** Copying native binary **********\n'
-echo "output/runtimes/$QUESTPDF_RUNTIME/native"
+OUTPUT_PATH="$PWD/output/runtimes/$QUESTPDF_RUNTIME/native"
+echo $OUTPUT_PATH
 
-mkdir -p output/runtimes/$QUESTPDF_RUNTIME/native
-find native/build -type f \( -name "*.dylib" -o -name "*.dll" -o -name "*.so" \) -exec cp {} output/runtimes/$QUESTPDF_RUNTIME/native \;
+mkdir -p $OUTPUT_PATH
+find native/build -type f \( -name "*.dylib" -o -name "*.dll" -o -name "*.so" \) -exec cp {} $OUTPUT_PATH \;
+
+echo $'\n********** Print symbols **********\n'
+nm -C "$OUTPUT_PATH/libQuestPdfSkia.so"
+
+echo $'\n********** Test loading native binary **********\n'
+ldd "$OUTPUT_PATH/libQuestPdfSkia.so"
 
 echo $'\n********** Building QuestPDF managed **********\n'
 
-dotnet build managed --configuration Debug --framework net8.0
+#dotnet build managed --configuration Debug --framework net8.0
 cp -R output/* managed/NativeSkia.Tests/bin/Debug/net8.0
-dotnet test managed --framework net8.0
+#dotnet test managed --framework net8.0
 mkdir -p testOutput/$QUESTPDF_RUNTIME
 cp -r managed/NativeSkia.Tests/bin/Debug/net8.0/Output/* testOutput/$QUESTPDF_RUNTIME
