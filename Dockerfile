@@ -10,6 +10,7 @@ RUN apk add --no-cache \
     build-base \
     cmake \
     clang \
+    llvm17 \
     icu-libs \
     linux-headers \
     bsd-compat-headers \
