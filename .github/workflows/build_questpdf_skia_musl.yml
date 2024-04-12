@@ -114,7 +114,7 @@ jobs:
           find native/build -type f \( -name "*.dylib" -o -name "*.dll" -o -name "*.so" \) -exec cp {} output/runtimes/${{ matrix.runtime.name }}/native \;
 
 
-      - name: Upload build artifacts 2
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: questpdf-native-libraries
@@ -123,11 +123,11 @@ jobs:
 
       - name: Setup .NET 8.0 SDK
         shell: alpine.sh {0}
-        run: >
+        run: |
           wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
-          && chmod +x ./dotnet-install.sh
-          && ./dotnet-install.sh --channel 8.0
-          
+          chmod +x ./dotnet-install.sh
+          ./dotnet-install.sh --channel 8.0
+          echo "${HOME}/.dotnet" >> $GITHUB_PATH
           
       - name: Test build artifacts
         shell: alpine.sh {0}
