@@ -2,6 +2,9 @@ name: Build Skia + QuestPDF (musl)
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - musl-build
 
 jobs:
   build:
