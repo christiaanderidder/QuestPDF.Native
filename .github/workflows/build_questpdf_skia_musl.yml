@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         runtime: 
-        - name: linux-x64-musl
+        - name: linux-x64
           runs-on: ubuntu-latest
 
     steps:
