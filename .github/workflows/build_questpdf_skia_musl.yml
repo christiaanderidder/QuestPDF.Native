@@ -17,8 +17,7 @@ jobs:
       matrix:
         runtime: 
         - name: linux-x64-musl
-          runs-on: ubuntu-latest-large
-          container: ubuntu:18.04
+          runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
