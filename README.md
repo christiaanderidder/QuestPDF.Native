@@ -16,7 +16,7 @@ docker run --rm -it \
 -e QUESTPDF_RUNTIME=linux-x64 \
 -v ./build.sh:/work/build.sh \
 -v ./native/CMakeLists.txt:/work/native/CMakeLists.txt \
--v ./output-amd64:/work/output \
+-v ./output:/work/output \
 -v skia_release_amd64:/work/skia/out/release \
 -v quest_release_amd64:/work/native/build \
 questpdf:amd64
@@ -33,7 +33,7 @@ docker run --rm -it \
 -e QUESTPDF_RUNTIME=linux-arm64 \
 -v ./build.sh:/work/build.sh \
 -v ./native/CMakeLists.txt:/work/native/CMakeLists.txt \
--v ./output-arm64:/work/output \
+-v ./output:/work/output \
 -v skia_release_arm64:/work/skia/out/release \
 -v quest_release_arm64:/work/native/build \
 questpdf:arm64
